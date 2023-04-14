@@ -4,161 +4,140 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  TextEditingController controller1 = TextEditingController();
+  TextEditingController controller2 = TextEditingController();
+
+  double result = 0, angka1 = 0, angka2 = 0;
+
+  tambah() {
+    setState(() {
+      angka1 = double.parse(controller1.text);
+      angka2 = double.parse(controller2.text);
+      result = angka1 + angka2;
+    });
+  }
+
+  kurang() {
+    setState(() {
+      angka1 = double.parse(controller1.text);
+      angka2 = double.parse(controller2.text);
+      result = angka1 - angka2;
+    });
+  }
+
+  kali() {
+    setState(() {
+      angka1 = double.parse(controller1.text);
+      angka2 = double.parse(controller2.text);
+      result = angka1 * angka2;
+    });
+  }
+
+  bagi() {
+    setState(() {
+      angka1 = double.parse(controller1.text);
+      angka2 = double.parse(controller2.text);
+      result = angka1 / angka2;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Mini Project',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Calculator'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
- 
-  TextEditingController bil1 = TextEditingController();
-  TextEditingController bil2 = TextEditingController();
-  int? result = 0, num1 = 0, num2 = 0;
-
-  add() {
-    setState(() {
-      num1 = int.parse(bil1.text);
-      num2 = int.parse(bil2.text);
-      result = num1! + num2!;
-    });
-  }
-
-  subtract() {
-    setState(() {
-      num1 = int.parse(bil1.text);
-      num2 = int.parse(bil2.text);
-      result = num1! - num2!;
-    });
-  }
-
-  multiply() {
-    setState(() {
-      num1 = int.parse(bil1.text);
-      num2 = int.parse(bil2.text);
-      result = num1! * num2!;
-    });
-  }
-
-  divide() {
-    setState(() {
-      num1 = int.parse(bil1.text);
-      num2 = int.parse(bil2.text);
-      result = num1! ~/ num2!;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+        home: Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: Colors.amber,
+        title: Text('Calculator'),
       ),
-      body: Container(
-        margin: EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Result : $result ',
-              style: TextStyle(
-                  fontSize: 26,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
-                controller: bil1,
+      body: Column(
+        children: [
+          Align(
+              alignment: Alignment.centerLeft,
+              child: Text('Result : $result',
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black))),
+          SizedBox(
+            height: 30,
+          ),
+          Padding(
+              padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+              child: TextField(
+                controller: controller1,
                 decoration: InputDecoration(
-                    fillColor: Color.fromARGB(255, 223, 220, 220),
+                    labelText: 'Enter first number',
                     filled: true,
-                    hintText: "Enter first number")),
-            SizedBox(
-              height: 30,
-            ),
-            TextField(
-                controller: bil2,
+                    fillColor: Colors.white),
+              )),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+              padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
+              child: TextField(
+                controller: controller2,
                 decoration: InputDecoration(
-                    fillColor: Color.fromARGB(255, 223, 220, 220),
+                    labelText: 'Enter second number',
                     filled: true,
-                    hintText: "Enter second number")),
-            SizedBox(
-              height: 30,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                add();
-                bil1.clear();
-                bil2.clear();
-              },
-              child: Text('ADD'),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 243, 109, 31)),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                subtract();
-                bil1.clear();
-                bil2.clear();
-              },
-              child: Text('SUBTRACT'),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 243, 109, 31)),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                multiply();
-                bil1.clear();
-                bil2.clear();
-              },
-              child: Text('MULTIPLY'),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 243, 109, 31)),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                divide();
-                bil1.clear();
-                bil2.clear();
-              },
-              child: Text('DIVIDE'),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 243, 109, 31)),
-            )
-          ],
-        ),
+                    fillColor: Colors.white),
+              )),
+          SizedBox(
+            height: 20,
+          ),
+          Align(
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        tambah();
+                        controller1.clear();
+                        controller2.clear();
+                      },
+                      child: Text('Add')),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        kurang();
+                        controller1.clear();
+                        controller2.clear();
+                      },
+                      child: Text('Substract')),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        kali();
+                        controller1.clear();
+                        controller2.clear();
+                      },
+                      child: Text('Multipy')),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        bagi();
+                        controller1.clear();
+                        controller2.clear();
+                      },
+                      child: Text('Divide'))
+                ],
+              ))
+        ],
       ),
-    );
+    ));
   }
 }
